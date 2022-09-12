@@ -23,7 +23,7 @@ function DecimalABinario(num) {
     num=Math.floor(num);
   }
   let binario=arrayBinario.join('');
-  return binario
+  return binario;
 }
 
 
