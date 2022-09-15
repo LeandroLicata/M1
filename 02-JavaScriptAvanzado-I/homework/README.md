@@ -31,8 +31,8 @@ console.log(x); //1
 
 ```javascript
 console.log(bar); //undefined
-console.log(baz); //undefined
-foo(); //da error porque no esta definida la funcion
+console.log(baz); //error
+foo(); //'Hola!'
 function foo() { console.log('Hola!'); }
 var bar = 1;
 baz = 2;
@@ -77,7 +77,7 @@ console.log(pm); //"Franco"
 ```javascript
 6 / "3" //2
 "2" * "3" //6
-4 + 5 + "px" //"45px"
+4 + 5 + "px" //"9px"
 "$" + 4 + 5 //"$45"
 "4" - 2 //2
 "4px" - 2 //NaN
@@ -87,7 +87,7 @@ parseInt("09") //9
 5 && 2 //2
 2 && 5 //5
 5 || 0 //5
-0 || 5 //0
+0 || 5 //5
 [3]+[3]-[10] //23
 3>2>1 //false
 [] == ![] //true
@@ -151,7 +151,7 @@ console.log(obj.prop.getFullname()); //'Aurelio De Rosa'
 
 var test = obj.prop.getFullname;
 
-console.log(test()); //'Juan Perez'
+console.log(test()); //undefined
 ```
 
 ### Event loop
