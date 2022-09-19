@@ -25,7 +25,7 @@ LinkedList.prototype.add = function(value) {
   if(!this.head) {
     this.head = node;
   } else {
-    current = this.head;
+    let current = this.head;
     while(current.next) {
       current = current.next;
     }
@@ -34,12 +34,30 @@ LinkedList.prototype.add = function(value) {
 }
 
 LinkedList.prototype.remove = function() {
-  current = this.head;
-  while(current.next.next) {
-    current=current.next;
+  if(!this.head) return null;
+  let current = this.head;
+  if(!current.next) {
+    let lastValue=current.value;
+    this.head = null;
+    return lastValue;
   }
-  current.next=null;
-  
+  while(current.next.next) {
+    current = current.next;
+  }
+  let lastValue=current.next.value;
+  current.next = null;
+  return lastValue;
+}
+
+LinkedList.prototype.search = function(parameter) {
+  let current = this.head;
+  while(current) {
+    if(typeof parameter === 'function') {
+      if(parameter(current.value)) return current.value;
+    } else if(current.value===parameter) return parameter;
+    current = current.next;
+  }
+  return null;
 }
 
 /*
@@ -57,8 +75,38 @@ La clase debe tener los siguientes métodos:
 Ejemplo: supongamos que quiero guardar {instructora: 'Ani'} en la tabla. Primero puedo chequear, con hasKey, si ya hay algo en la tabla con el nombre 'instructora'; luego, invocando set('instructora', 'Ani'), se almacenará el par clave-valor en un bucket específico (determinado al hashear la clave)
 */
 
-function HashTable() {}
+function HashTable() {
+  this.numBuckets = 35;
+  this.buckets=[];
+}
 
+HashTable.prototype.hash=function(input) {
+  let hash=0;
+  for(let i=0; i<input.length; i++) {
+    hash += input.charCodeAt(i)
+  }
+  return hash%this.numBuckets;
+}
+
+HashTable.prototype.set=function(clave, valor) {
+  if(typeof clave !== 'string') throw TypeError('Keys must be strings');
+  let indice = this.hash(clave);
+  if(!this.buckets[indice]) {
+    this.buckets[indice] = {}
+  }
+  this.buckets[indice][clave] = valor;
+}
+
+HashTable.prototype.get = function(clave) {
+  let indice = this.hash(clave);
+  return this.buckets[indice][clave];
+}
+
+HashTable.prototype.hasKey=function(clave) {
+  let indice = this.hash(clave);
+  if(this.buckets[indice].hasOwnProperty(clave)) return true;
+  else return false;
+}
 // No modifiquen nada debajo de esta linea
 // --------------------------------
 
