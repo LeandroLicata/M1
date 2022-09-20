@@ -104,8 +104,8 @@ HashTable.prototype.get = function(clave) {
 
 HashTable.prototype.hasKey=function(clave) {
   let indice = this.hash(clave);
-  if(this.buckets[indice].hasOwnProperty(clave)) return true;
-  else return false;
+  return this.buckets[indice].hasOwnProperty(clave);
+  
 }
 // No modifiquen nada debajo de esta linea
 // --------------------------------
