@@ -40,12 +40,13 @@ function insertionSort(array) {
   // Devolver el array ordenado resultante
   // Tu código:
   for(let i=1; i<array.length; i++) {
-    let currentValue=array[i];
-    let j
-    for(j=i-1; j>=0 && array[j]>currentValue; j--) {
-      array[j+1]=array[j];
+    let aux=array[i];
+    let j=i-1
+    while(j>=0 && aux<array[j]) {
+      array[j+1] = array[j];
+      j--;
     }
-    array[j+1]=currentValue;
+    array[j+1] = aux;
   }
   return array;
 }
@@ -56,14 +57,16 @@ function selectionSort(array) {
   // el array recibido como parámetro utilizando dos arreglos
   // Devolver el array ordenado resultante
   // Tu código:
-  for (let i = 0; i < array.length - 1; i++) {
-    let minIndex = i;
+  for (let i = 0; i < array.length; i++) {
+    let min = i;
     for (let j = i + 1; j < array.length; j++) {
-      if (array[j] < array[minIndex]) {
-        minIndex = j;
+      if (array[j] < array[min]) {
+        min = j;
       }     
     }
-    [array[i], array[minIndex]] = [array[minIndex], array[i]];
+    if(i !== min) {
+      [array[i], array[min]] = [array[min], array[i]];
+    }
   }
   return array;
 }
