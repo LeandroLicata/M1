@@ -14,9 +14,15 @@ const {
 // Pista: utilizar el método Array.isArray() para determinar si algun elemento de array es un array anidado
 // [Para más información del método: https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/Array/isArray]
 
-var countArray = function(array) {
+const countArray = function(array) {
     // Tu código aca:
-    
+    let suma = 0;
+    for(let i = 0; i < array.length; i++) {
+        if(Array.isArray(array[i])) {
+            suma += countArray(array[i]);
+        } else suma += array[i];
+    }
+    return suma;
 }
 
 
@@ -39,7 +45,14 @@ var countArray = function(array) {
 
 var countProps = function(obj) {
     // Tu código aca:
-
+    let counter = 0;
+    for(let prop in obj) {
+        counter++;
+        if(typeof obj[prop] === 'object' && !Array.isArray(obj[prop])) {
+            counter += countProps(obj[prop]);
+        }
+    }
+    return counter;
 }
 
 
@@ -53,7 +66,16 @@ var countProps = function(obj) {
 
 LinkedList.prototype.changeNotNumbers = function(){
     // Tu código aca:
-
+    let changes = 0;
+    let current = this.head;
+    while(current) {
+        if(isNaN(Number(current.value))) {
+            current.value = 'Kiricocho';
+            changes++;
+        }
+        current = current.next;
+    }
+    return changes;
 }
 
 
@@ -67,7 +89,14 @@ LinkedList.prototype.changeNotNumbers = function(){
 
 var mergeQueues = function(queueOne, queueTwo) {
     // Tu código aca:
-
+    let newQueue = new Queue();
+    while(queueOne.size() || queueTwo.size()) {
+        let firstElement = queueOne.dequeue();
+        let secondElement = queueTwo.dequeue();
+        if(firstElement) newQueue.enqueue(firstElement);
+        if(secondElement) newQueue.enqueue(secondElement);
+    }
+    return newQueue;
 }
 
 
@@ -82,14 +111,19 @@ var mergeQueues = function(queueOne, queueTwo) {
 
 var closureMult = function(multiplier) {
     // Tu código aca:
-
+    return function(number) {
+        return multiplier*number;
+    }
 }
 
 // Implementar el método sum dentro del prototype de BinarySearchTree
 // que debe retornar la suma total de los valores dentro de cada nodo del arbol
 BinarySearchTree.prototype.sum = function() {
     // Tu código aca:
-
+    if(!this.left && !this.right) return this.value;
+    if(!this.left) return this.value + this.right.sum();
+    if(!this.right) return this.value + this.left.sum();
+    return this.value + this.left.sum() + this.right.sum();
 }
 
 module.exports = {
